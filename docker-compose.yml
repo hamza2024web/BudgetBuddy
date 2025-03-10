@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: postgres_container
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root_password
+      POSTGRES_DB: BudgetBuddy_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - laravel_network
+
+  pgadmin:
+    container_name: pgadmin4_container_v2
+    image: dpage/pgadmin4:9.0
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root_password
+    ports:
+      - "8084:80"
+    networks:
+      - laravel_network
+
+  app:
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    restart: always
+    working_dir: /var/www/html
+    volumes:
+      - ./project:/var/www/html
+    ports:
+      - "82:80"
+    depends_on:
+      - db
+    networks:
+      - laravel_network
+
+volumes:
+  db_data:
+
+networks:
+  laravel_network:
