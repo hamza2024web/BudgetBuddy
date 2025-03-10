@@ -4,8 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Tag extends Model
 {
-    use HasFactory;
+    use HasFactory , HasApiTokens , Notifiable;
+    protected $fillable = [
+        'name',
+    ];
 }
