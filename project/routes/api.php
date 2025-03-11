@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DependenceController;
 use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,14 +21,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/', function (){
-    return 'API';
-});
-
+Route::apiResource('tags',[TagController::class]);
+Route::apiResource('dependences',[DependenceController::class]);
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
-Route::get('/tag',[TagController::class,'index']);
-Route::post('/storeTag',[TagController::class,'store']); 
-Route::get('/show',[TagController::class,'show']);
-Route::post('/updateTag',[TagController::class,'update']);

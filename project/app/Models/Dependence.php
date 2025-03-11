@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class Dependence extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'tags',
+        'name'
     ];
-
-    public function dependences (){
-        return $this->belongsToMany(Dependence::class);
+    public function tags (){
+        return $this->belongsToMany(Tag::class);
     }
 }
