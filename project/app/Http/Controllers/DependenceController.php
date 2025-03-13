@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Resources\DependenceCollection;
 use App\Models\Dependence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -17,7 +17,7 @@ class DependenceController extends Controller
     public function index()
     {
         $dependences = Dependence::with('tags')->get();
-        return response()->json($dependences);
+        return new DependenceCollection($dependences);
     }
 
     /**
