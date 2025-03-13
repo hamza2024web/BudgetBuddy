@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDependenceRequest;
-use App\Http\Requests\UpdateDependenceRequest;
+
 use App\Models\Dependence;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class DependenceController extends Controller
 {
@@ -32,10 +31,13 @@ class DependenceController extends Controller
         $fileds = $request->validate([
             'name' => 'required',
             'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id'
         ]);
 
+        $userId = FacadesAuth::id();
         $dependence = Dependence::create([
             'name' => $fileds["name"],
+            'user_id' => $userId
         ]);
         $dependence->tags()->attach($fileds['tags']);
         return $dependence;
