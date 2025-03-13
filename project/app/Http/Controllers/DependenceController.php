@@ -28,6 +28,7 @@ class DependenceController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create',Dependence::class);
         $fileds = $request->validate([
             'name' => 'required',
             'tags' => 'required|array',
@@ -51,6 +52,7 @@ class DependenceController extends Controller
      */
     public function show(Dependence $dependence)
     {
+        $this->authorize('view',Dependence::class);
         return $dependence;
     }
 
@@ -63,6 +65,7 @@ class DependenceController extends Controller
      */
     public function update(Request $request, Dependence $dependence)
     {
+        $this->authorize('update',Dependence::class);
         $fileds = $request->validate([
             'name' => 'required',
             'tags' => 'required|array',
@@ -87,6 +90,7 @@ class DependenceController extends Controller
      */
     public function destroy(Dependence $dependence)
     {
+        $this->authorize('delete',Dependence::class);
         $dependence->tags()->detach();
         $dependence->delete();
         return ['message' => 'The dependence has been deleted'];

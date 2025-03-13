@@ -18,7 +18,7 @@ class DependencePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class DependencePolicy
      */
     public function view(User $user, Dependence $dependence)
     {
-        //
+        return $user->id === $dependence->user_id;
     }
 
     /**
@@ -41,7 +41,7 @@ class DependencePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class DependencePolicy
      */
     public function update(User $user, Dependence $dependence)
     {
-        //
+        return $user->id === $dependence->user_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class DependencePolicy
      */
     public function delete(User $user, Dependence $dependence)
     {
-        //
+        return $user->id === $dependence->user_id;
     }
 
     /**
