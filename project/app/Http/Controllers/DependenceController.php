@@ -6,6 +6,7 @@ use App\Http\Requests\StoreDependenceRequest;
 use App\Http\Requests\UpdateDependenceRequest;
 use App\Models\Dependence;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Return_;
 
 class DependenceController extends Controller
 {
@@ -31,7 +32,6 @@ class DependenceController extends Controller
         $fileds = $request->validate([
             'name' => 'required',
             'tags' => 'required|array',
-            'tags.*' => 'exists:tags,id'
         ]);
 
         $dependence = Dependence::create([
@@ -64,13 +64,17 @@ class DependenceController extends Controller
         $fileds = $request->validate([
             'name' => 'required',
             'tags' => 'required|array',
-            'tags*id' => 'exists:tags,id'
+            'tags.*' => 'exists:tags,id'
         ]);
         $dependence->update([
             'name' => $fileds['name']
         ]);
-        
 
+        $dependence->refresh();
+
+        $dependence->tags()->sync($fileds['tags']);
+
+        return $dependence;
     }
 
     /**
@@ -81,6 +85,8 @@ class DependenceController extends Controller
      */
     public function destroy(Dependence $dependence)
     {
-        //
+        $dependence->tags()->detach();
+        $dependence->delete();
+        return ['message' => 'The dependence has been deleted'];
     }
 }

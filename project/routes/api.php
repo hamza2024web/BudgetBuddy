@@ -21,8 +21,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::apiResource('tags',[TagController::class]);
-Route::apiResource('dependences',[DependenceController::class]);
+Route::apiResource('tags',TagController::class);
+Route::apiResource('expenses',DependenceController::class);
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/logout',[AuthController::class,'logout'])->middleware('auth:sanctum');

@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Dependence extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'name'
-    ];
-    public function tags (){
-        return $this->belongsToMany(Tag::class);
+
+    protected $fillable = ['name'];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'dependence_tag', 'dependence_id', 'tag_id');
     }
 }

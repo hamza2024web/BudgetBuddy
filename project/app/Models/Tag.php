@@ -13,6 +13,6 @@ class Tag extends Model
     ];
 
     public function dependences (){
-        return $this->belongsToMany(Dependence::class);
+        return $this->belongsToMany(Dependence::class,'dependence_tag', 'tag_id', 'dependence_id');
     }
 }
