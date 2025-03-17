@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DependenceController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -30,3 +31,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout',[AuthController::class,'logout']);
     Route::get('/user',[UserController::class,'show']);
 });
+Route::apiResource('group',GroupController::class);
