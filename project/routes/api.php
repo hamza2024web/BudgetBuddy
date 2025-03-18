@@ -30,5 +30,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('expenses',DependenceController::class);
     Route::post('/logout',[AuthController::class,'logout']);
     Route::get('/user',[UserController::class,'show']);
+    Route::apiResource('groups',GroupController::class);
 });
-Route::apiResource('group',GroupController::class);

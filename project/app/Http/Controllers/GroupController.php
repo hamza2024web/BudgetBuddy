@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GroupCollection;
 use App\Models\Group as ModelsGroup;
 use Google\Service\CloudIdentity\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
-
 
 class GroupController extends Controller
 {
@@ -17,7 +17,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $groups = ModelsGroup::with('users')->get();
+        return new GroupCollection($groups);
     }
 
     /**
@@ -30,18 +31,21 @@ class GroupController extends Controller
     {
         $formFields = $request->validate([
             'nom' => 'required',
-            'device' => 'required',
+            'devise' => 'required',
             'membres' => 'required|array',
-            'users.id' => 'exists:users,id'
+            'membres.*' => 'exists:users,id'
         ]);
 
         $userId = FacadesAuth::id();
         $group = ModelsGroup::create([
             'nom' => $formFields['nom'],
-            'device' => $formFields['device'],
+            'devise' => $formFields['devise'],
             'isAdmin' => $userId
         ]);
-        $group->users()->attach($formFields['membres']);
+
+        $allMembres = array_merge($formFields['membres'],[$userId]);
+
+        $group->users()->attach($allMembres);
         return $group;
     }
 
@@ -53,7 +57,7 @@ class GroupController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**

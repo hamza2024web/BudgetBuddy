@@ -10,7 +10,8 @@ class Group extends Model
     use HasFactory;
     protected $fillable = [
         'nom',
-        'device'
+        'device',
+        'isAdmin'
     ];
 
     public function users(){
