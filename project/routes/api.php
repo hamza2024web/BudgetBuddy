@@ -5,6 +5,7 @@ use App\Http\Controllers\DependenceController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ExpenseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +32,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout',[AuthController::class,'logout']);
     Route::get('/user',[UserController::class,'show']);
     Route::apiResource('groups',GroupController::class);
+});
+Route::prefix('groups/{id}/expenses')->group(function () {
+    Route::post('/', [ExpenseController::class, 'store']); 
+    Route::get('/', [ExpenseController::class, 'index']); 
+    Route::delete('{expenseId}', [ExpenseController::class, 'destroy']); 
 });

@@ -45,7 +45,12 @@ class User extends Authenticatable
     public function groups(){
         return $this->belongsToMany(Group::class,'user_group');
     }
-    public function group_payeurs(){
-        return $this->belongsToMany(Group::class,'group_payeurs');
+    public function payers()
+    {
+        return $this->belongsToMany(Expense::class, 'expense_payers')->withPivot('amount_paid');
+    }
+    public function participants()
+    {
+        return $this->belongsToMany(Expense::class, 'expense_participants')->withPivot('amount_owed'); 
     }
 }

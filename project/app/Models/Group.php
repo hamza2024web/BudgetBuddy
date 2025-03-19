@@ -9,14 +9,15 @@ class Group extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nom', 'devise', 'isAdmin', 'depense', 
-        'montant', 'payeur_id', 'somme', 'methode_somme'
+        'nom', 'devise', 'isAdmin'
     ];
 
     public function users(){
         return $this->belongsToMany(User::class,'user_group');
     }
-    public function payeurs(){
-        return $this->belongsToMany(User::class,'group_payeurs');
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
     }
+
 }

@@ -34,12 +34,6 @@ class GroupController extends Controller
             'devise' => 'required',
             'membres' => 'required|array',
             'membres.*' => 'exists:users,id',
-            'depense' => 'required',
-            'montant' => 'required',
-            'payeur_id' => 'required|array',
-            'payeur_id.*' => 'exists:users,id',
-            'somme' => 'required',
-            'methode_somme' => 'required'
         ]);
 
         $userId = FacadesAuth::id();
@@ -47,14 +41,9 @@ class GroupController extends Controller
             'nom' => $formFields['nom'],
             'devise' => $formFields['devise'],
             'isAdmin' => $userId,
-            'depense' => $formFields['depense'],
-            'montant' => $formFields['montant'],
-            'somme' => $formFields['somme'],
-            'methode_somme' => $formFields['methode_somme']
         ]);
 
         $allMembres = array_merge($formFields['membres'],[$userId]);
-        $group->payeurs()->attach($formFields['payeur_id']);
         $group->users()->attach($allMembres);
         return $group;
     }
