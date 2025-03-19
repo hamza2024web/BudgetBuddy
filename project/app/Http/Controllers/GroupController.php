@@ -17,7 +17,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = ModelsGroup::with('users')->get();
+        $groups = ModelsGroup::with(['users','payeurs'])->get();
         return new GroupCollection($groups);
     }
 

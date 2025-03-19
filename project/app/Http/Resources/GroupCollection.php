@@ -19,9 +19,14 @@ class GroupCollection extends ResourceCollection
                 return [
                     'id' =>$group->id,
                     'name' => $group->nom,
-                    'devise' => $group->devise,
                     'isAdmin' => $group->isAdmin,
+                    'depense' => $group->depense,
+                    'montant' => $group->montant,
+                    'somme' => $group->somme,
+                    'methode_somme' => $group->methode_somme,
                     'users' => $group->users->pluck('name'),
+                    'payeurs' => $group->payeurs->pluck('name'),
+                    'devise' => $group->devise,
                     'created_at' => $group->created_at->toDateTimeString()
                 ];
             }),
