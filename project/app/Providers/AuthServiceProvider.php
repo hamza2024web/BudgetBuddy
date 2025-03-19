@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Dependence;
+use App\Models\Group;
 use App\Policies\DependencePolicy;
+use App\Policies\GroupPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Dependence::class => DependencePolicy::class,
+        Group::class => GroupPolicy::class
     ];
 
     /**
