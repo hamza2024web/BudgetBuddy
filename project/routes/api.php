@@ -7,6 +7,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\RecurringExpenseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,4 +46,9 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::put('/budgets/{id}',[BudgetController::class,'Expense']);
     Route::delete('/budgets/{id}',[BudgetController::class,'destroy']);
     Route::get('/alert',[BudgetController::class,'alerts']);
+});
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/recurring-expenses',[RecurringExpenseController::class,'store']);
+    Route::get('/recurring-expenses',[RecurringExpenseController::class,'index']);
+    Route::delete('/recurring-expenses/{id}',[RecurringExpenseController::class,'destroy']);
 });
