@@ -43,4 +43,6 @@ Route::prefix('groups/{id}/expenses')->group(function () {
 Route::middleware('auth:sanctum')->group(function (){
     Route::post('/budgets',[BudgetController::class,'storeBudget']);
     Route::put('/budgets/{id}',[BudgetController::class,'Expense']);
+    Route::delete('/budgets/{id}',[BudgetController::class,'destroy']);
+    Route::get('/alert',[BudgetController::class,'alerts']);
 });

@@ -55,4 +55,13 @@ class BudgetController extends Controller
 
         return response()->json(['message' => 'Expense added successfully']);
     }
+    public function destroy($budgetId){
+        $budget = Budget::where('id',$budgetId)->findOrFail($budgetId);
+        $budget->delete();
+        return response()->json(['message' => 'Budget deleted successfully'],200);
+    }
+    public function alerts(){
+        $alert = Alert::all();
+        return $alert;
+    }
 }
