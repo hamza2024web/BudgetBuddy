@@ -10,8 +10,8 @@ use App\Models\Expense;
 class ExpenseController extends Controller
 {
     public function index($groupId){
-        $group = Group::with(['users','payers','participants'])->findOrFail($groupId);
-        return response()->json($group->expenses);
+        $group = Group::with(['expenses'])->findOrFail($groupId);
+        return response()->json($group);
     }
     public function store(Request $request, $groupId)
     {
@@ -53,7 +53,7 @@ class ExpenseController extends Controller
     }
     
     public function destroy($groupId,$expenseId){
-        $expense = Expense::where('group_id',$groupId)->findOrFails($expenseId);
+        $expense = Expense::where('group_id',$groupId)->findOrFail($expenseId);
         $expense->delete();
         return response()->json(['message' => 'Expense deleted successfully'],200);
     }

@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('groups',GroupController::class);
 });
 Route::prefix('groups/{id}/expenses')->group(function () {
-    Route::post('/', [ExpenseController::class, 'store']); 
     Route::get('/', [ExpenseController::class, 'index']); 
+    Route::post('/', [ExpenseController::class, 'store']); 
     Route::delete('{expenseId}', [ExpenseController::class, 'destroy']); 
 });
