@@ -32,15 +32,22 @@ class ProcessRecurringExpenses implements ShouldQueue
      */
     public function handle()
     {
-        $recurringExpenses = RecurringExpense::all();
+        $today = Carbon::today();
 
-        foreach ($recurringExpenses as $expense){
+        $recurringExpenses = RecurringExpense::where('next_due_date', '<=', $today)->get();
+
+
+        foreach ($recurringExpenses as $expense) {
             Expense::create([
                 'user_id' => $expense->user_id,
-                'category' => $expense->category,
+                'name' => $expense->name,
                 'amount' => $expense->amount,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'category' => $expense->category,
+                'date' => $today,
+            ]);
+
+            $expense->update([
+                'next_due_date' => $today->addMonth(),
             ]);
         }
     }

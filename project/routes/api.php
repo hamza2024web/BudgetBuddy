@@ -27,7 +27,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('/register',[AuthController::class,'register']);
+
 Route::post('/login',[AuthController::class,'login']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('tags',TagController::class);
     Route::apiResource('expenses',DependenceController::class);
@@ -35,20 +37,22 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user',[UserController::class,'show']);
     Route::apiResource('groups',GroupController::class);
 });
+
 Route::prefix('groups/{id}/expenses')->group(function () {
     Route::get('/', [ExpenseController::class, 'index']); 
     Route::post('/', [ExpenseController::class, 'store']); 
     Route::delete('{expenseId}', [ExpenseController::class, 'destroy']); 
 });
-// Route::get('groups/{id}/balances ',[ExpenseController::class,'solde']);
+
 Route::middleware('auth:sanctum')->group(function (){
     Route::post('/budgets',[BudgetController::class,'storeBudget']);
     Route::put('/budgets/{id}',[BudgetController::class,'Expense']);
     Route::delete('/budgets/{id}',[BudgetController::class,'destroy']);
     Route::get('/alert',[BudgetController::class,'alerts']);
 });
-Route::middleware('auth:sanctum')->group(function(){
-    Route::post('/recurring-expenses',[RecurringExpenseController::class,'store']);
-    Route::get('/recurring-expenses',[RecurringExpenseController::class,'index']);
-    Route::delete('/recurring-expenses/{id}',[RecurringExpenseController::class,'destroy']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/recurring-expenses', [RecurringExpenseController::class, 'store']);
+    Route::get('/recurring-expenses', [RecurringExpenseController::class, 'index']);
+    Route::delete('/recurring-expenses/{id}', [RecurringExpenseController::class, 'destroy']);
 });
