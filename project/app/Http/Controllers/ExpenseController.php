@@ -24,9 +24,14 @@ class ExpenseController extends Controller
             'payers.*.amount_paid' => 'required|numeric|min:0',
             'participants' => 'required|array',
             'participants.*.user_id' => 'exists:users,id',
-            'participants.*.amount_owed' => 'nullable|numeric|min:0', 
+            'participants.*.amount_owed' => [
+                'required_if:split_method,custom', 
+                'numeric',
+                'min:0'
+            ],
             'split_method' => 'required|in:equal,custom'
         ]);
+        
         $expense = Expense::create([
             'name' => $formFields['name'],
             'group_id' => $group->id,
