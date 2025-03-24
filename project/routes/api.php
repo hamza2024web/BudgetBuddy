@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DependenceController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TagController;
@@ -37,4 +38,9 @@ Route::prefix('groups/{id}/expenses')->group(function () {
     Route::get('/', [ExpenseController::class, 'index']); 
     Route::post('/', [ExpenseController::class, 'store']); 
     Route::delete('{expenseId}', [ExpenseController::class, 'destroy']); 
+});
+// Route::get('groups/{id}/balances ',[ExpenseController::class,'solde']);
+Route::middleware('auth:sanctum')->group(function (){
+    Route::post('/budgets',[BudgetController::class,'storeBudget']);
+    Route::put('/budgets/{id}',[BudgetController::class,'Expense']);
 });

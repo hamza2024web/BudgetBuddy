@@ -62,4 +62,7 @@ class ExpenseController extends Controller
         $expense->delete();
         return response()->json(['message' => 'Expense deleted successfully'],200);
     }
+    public function solde($groupId){
+        
+    }
 }
