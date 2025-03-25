@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Models\RecurringExpense;
-use App\Models\Expense;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,11 +33,9 @@ class ProcessRecurringExpenses implements ShouldQueue
     {
         $today = Carbon::today();
 
-        $recurringExpenses = RecurringExpense::where('next_due_date', '<=', $today)->get();
-
-
+        $recurringExpenses = RecurringExpense::where('next_due_date','<=',$today)->get();
         foreach ($recurringExpenses as $expense) {
-            Expense::create([
+            RecurringExpense::create([
                 'user_id' => $expense->user_id,
                 'name' => $expense->name,
                 'amount' => $expense->amount,

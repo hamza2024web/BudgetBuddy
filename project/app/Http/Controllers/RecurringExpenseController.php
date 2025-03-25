@@ -30,13 +30,15 @@ class RecurringExpenseController extends Controller
 
     public function index()
     {
-        $expenses = RecurringExpense::where('user_id', Auth::id())->get();
+        $user_id = Auth::id();
+        $expenses = RecurringExpense::where('user_id', $user_id)->get();
         return response()->json($expenses);
     }
 
     public function destroy($id)
     {
-        $expense = RecurringExpense::where('user_id', Auth::id())->find($id);
+        $user_id = Auth::id();
+        $expense = RecurringExpense::where('user_id', $user_id)->find($id);
         if (!$expense) {
             return response()->json(['error' => 'Dépense non trouvée'], 404);
         }

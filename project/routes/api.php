@@ -10,6 +10,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\RecurringExpenseController;
+use App\Http\Controllers\SummaryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -60,3 +61,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::get('groups/{id}/balances',[BalanceController::class,'balance']);
 Route::get('expenses/anomalies',[AnomaliesController::class,'anomalies']);
+Route::get('reports/summary',[SummaryController::class,'financialSummary']);
+Route::get('reports/custom/start={YYYY-MM-DD}&end={YYYY-MM-DD}',[SummaryController::class,'customFinancial']);
