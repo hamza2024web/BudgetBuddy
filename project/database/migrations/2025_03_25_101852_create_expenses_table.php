@@ -16,12 +16,13 @@ class CreateExpensesTable extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->string('name'); 
-            $table->unsignedBigInteger('group_id');
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $table->foreignId('group_id')->nullable()->constrained('groups')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->decimal('total_amount', 10, 2); 
             $table->enum('split_method', ['equal', 'custom']); 
+            $table->date('date'); 
             $table->timestamps();
-        });
+        });        
     }
 
     /**

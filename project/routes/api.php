@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DependenceController;
 use App\Http\Controllers\GroupController;
@@ -56,3 +57,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/recurring-expenses', [RecurringExpenseController::class, 'index']);
     Route::delete('/recurring-expenses/{id}', [RecurringExpenseController::class, 'destroy']);
 });
+Route::get('groups/{id}/balances',[BalanceController::class,'balance']);

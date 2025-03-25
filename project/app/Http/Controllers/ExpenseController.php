@@ -41,19 +41,11 @@ class ExpenseController extends Controller
         foreach ($formFields['payers'] as $payer) {
             $expense->payers()->attach($payer['user_id'], ['amount_paid' => $payer['amount_paid']]);
         }
-        if ($formFields['split_method'] === 'equal') {
-            $numParticipants = count($formFields['participants']);
-            $equalShare = $formFields['total_amount'] / max($numParticipants, 1); 
-    
-            foreach ($formFields['participants'] as $participant) {
-                $expense->participants()->attach($participant['user_id'], ['amount_owed' => $equalShare]);
-            }
-        } else {
-            foreach ($formFields['participants'] as $participant) {
-                $expense->participants()->attach($participant['user_id'], ['amount_owed' => $participant['amount_owed']]);
-            }
+
+        foreach ($formFields['participants'] as $participant) {
+            $expense->participants()->attach($participant['user_id'], ['amount_owed' => $participant['amount_owed']]);
         }
-    
+        
         return response()->json($expense->load('payers', 'participants'), 201);
     }
     
@@ -62,7 +54,5 @@ class ExpenseController extends Controller
         $expense->delete();
         return response()->json(['message' => 'Expense deleted successfully'],200);
     }
-    public function solde($groupId){
-        
-    }
+
 }
