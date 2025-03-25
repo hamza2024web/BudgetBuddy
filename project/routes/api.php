@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnomaliesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\BudgetController;
@@ -58,3 +59,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/recurring-expenses/{id}', [RecurringExpenseController::class, 'destroy']);
 });
 Route::get('groups/{id}/balances',[BalanceController::class,'balance']);
+Route::get('expenses/anomalies',[AnomaliesController::class,'anomalies']);
