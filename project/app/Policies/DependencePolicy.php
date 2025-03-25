@@ -30,7 +30,7 @@ class DependencePolicy
      */
     public function view(User $user, Dependence $dependence)
     {
-        return $user->id === $dependence->user_id;
+        // return $user->id === $dependence->user_id;
     }
 
     /**

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SummaryController extends Controller
 {
-    public function financialSummary(Request $request){
+    public function financialSummary(){
         $user_id = Auth::id();
 
         $total_income = User::where('id',$user_id)->get('average_monthly_income');
