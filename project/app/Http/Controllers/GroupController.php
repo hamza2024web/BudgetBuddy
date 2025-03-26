@@ -70,9 +70,21 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $group = ModelsGroup::findOrFail($id);    
+        $formFields = $request->validate([
+            'nom' => 'required',
+            'devise' => 'required',
+            'membres' => 'required|array',
+            'membres.*' => 'exists:users,id', 
+        ]);
+        $group->update([
+            'nom' => $formFields['nom'],
+            'devise' => $formFields['devise']
+        ]);    
+        $group->users()->sync($formFields['membres']);    
+        return response()->json($group, 200);
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -81,7 +93,10 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $group = ModelsGroup::findOrFail($id);
+        $group->users()->detach();
+        $group->delete();
+        return response()->json(['message' => 'the group has been deleted']);
     }
     public function settle(Request $request, $groupId)
     {
