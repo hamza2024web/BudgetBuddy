@@ -63,3 +63,5 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('groups/{id}/balances',[BalanceController::class,'balance']);
 Route::get('reports/summary',[SummaryController::class,'financialSummary']);
 Route::get('reports/custom/start={YYYY-MM-DD}&end={YYYY-MM-DD}',[SummaryController::class,'customFinancial']);
+Route::post('/groups/{id}/settle',[GroupController::class,'settle']);
+Route::get('/groups/{id}/history',[GroupController::class,'history']);

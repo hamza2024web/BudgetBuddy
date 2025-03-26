@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\GroupCollection;
+use App\Models\Expense;
 use App\Models\Group as ModelsGroup;
 use Google\Service\CloudIdentity\Group;
 use Illuminate\Http\Request;
@@ -81,5 +82,39 @@ class GroupController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function settle(Request $request, $groupId)
+    {
+        $group = ModelsGroup::findOrFail($groupId);
+        if (!$group) {
+            return response()->json(['error' => 'Group not found'], 404);
+        }
+        $formFields = $request->validate([
+            'payers' => 'required|array',
+            'payers.*.user_id' => 'exists:users,id', 
+            'payers.*.amount_paid' => 'required|numeric|min:0',
+        ]);
+        $expense = Expense::where('group_id', $groupId)->first();
+        if (!$expense) {
+            return response()->json(['error' => 'No expense found for this group'], 404);
+        }
+        foreach ($formFields['payers'] as $payeur) {
+            $expense->payers()->attach($payeur['user_id'], ['amount_paid' => $payeur['amount_paid']]);
+        }
+        return response()->json($expense->load('payers'), 201);
+    }
+    
+    public function history($groupId)
+    {
+        $group = ModelsGroup::findOrFail($groupId);
+        if (!$group) {
+            return response()->json(['error' => 'Group not found'], 404);
+        }
+        $expenses = Expense::where('group_id', $groupId)->get();
+        if ($expenses->isEmpty()) {
+            return response()->json(['error' => 'No expenses found for this group'], 404);
+        }
+        $paiments = $expenses->load('payers');
+        return response()->json($paiments);
     }
 }
