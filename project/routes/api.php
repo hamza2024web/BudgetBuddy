@@ -4,6 +4,7 @@ use App\Http\Controllers\AnomaliesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DependenceController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TagController;
@@ -35,6 +36,7 @@ Route::post('/login',[AuthController::class,'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('tags',TagController::class);
+    Route::apiResource('category',CategoryController::class);
     Route::get('expenses/anomalies',[AnomaliesController::class,'anomalies']);
     Route::apiResource('expenses',DependenceController::class);
     Route::post('/logout',[AuthController::class,'logout']);

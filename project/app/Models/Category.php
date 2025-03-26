@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RecurringExpense extends Model
+class Category extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id', 'name', 'amount', 'category', 'next_due_date'
+        'name'
     ];
-
-    public function categories(){
-        return $this->hasMany(Category::class);
+    
+    public function recurringexpenses(){
+        return $this->belongsTo(RecurringExpense::class);
     }
 }
