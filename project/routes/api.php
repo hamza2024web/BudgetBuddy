@@ -35,6 +35,7 @@ Route::post('/login',[AuthController::class,'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('tags',TagController::class);
+    Route::get('expenses/anomalies',[AnomaliesController::class,'anomalies']);
     Route::apiResource('expenses',DependenceController::class);
     Route::post('/logout',[AuthController::class,'logout']);
     Route::get('/user',[UserController::class,'show']);
@@ -60,6 +61,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/recurring-expenses/{id}', [RecurringExpenseController::class, 'destroy']);
 });
 Route::get('groups/{id}/balances',[BalanceController::class,'balance']);
-Route::get('expenses/anomalies',[AnomaliesController::class,'anomalies']);
 Route::get('reports/summary',[SummaryController::class,'financialSummary']);
 Route::get('reports/custom/start={YYYY-MM-DD}&end={YYYY-MM-DD}',[SummaryController::class,'customFinancial']);
