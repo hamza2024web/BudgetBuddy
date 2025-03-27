@@ -27,7 +27,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $formFields = $request->validate([
-            'name'
+            'name' => 'required'
         ]);
         $category = Category::create($formFields);
         return ['name' => $category];
@@ -54,7 +54,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $formFields = $request->validate([
-            'name'
+            'name' => 'required'
         ]);
         $category->update($formFields);
         return $category;
